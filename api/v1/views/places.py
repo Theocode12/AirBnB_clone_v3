@@ -7,6 +7,7 @@ from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.state import State
 from models.user import User
 
 
@@ -135,3 +136,50 @@ def create_linked_to_city_place(city_id):
     return(
         jsonify(dct)
         ), 201
+
+@place_views.route('places_search', strict_slashes=False,
+                   methods=["POST"])
+def search_for_place():
+    """ retrieves all places that match search criteria """
+    try:
+        data = request.get_json()
+    except Exception:
+        return jsonify({
+            "error": "Not a JSON"
+            }), 400
+    state_ids = data.get("states")
+    city_ids = data.get("cities")
+    amenity_ids = data.get("amenities")
+    places = storage.all(Place)
+    if not state_ids and not city_ids and not amenity_ids:
+        res = [place.to_dict() for place in places]
+        return jsonify(res)
+
+    res = []
+    if state_ids:
+        for id_ in state_ids:
+            state = storage.get(State, id_)
+            if state:
+                for city in state.cities:
+                    for p in city.places:
+                        res.append(p.to_dict())
+    if city_ids:
+        for id_ in city_ids:
+            city = storage.get(City, id_)
+            if city:
+                for p in city.places:
+                    if p.to_dict() not in res:
+                        res.append(p.to_dict())
+    if amenity_ids:
+        size = len(amenity_ids)
+        for p in places:
+            count = 0
+            p_amenities = p.amenities
+            for amenity in p_amenities:
+                if amenity.id in amenity_ids:
+                    count += 1
+            if count == size:
+                res.append(p.to_dict())
+            elif p.to_dict() in res:
+                res.remove(p.to_dict())
+    return jsonify(res)
