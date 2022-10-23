@@ -151,6 +151,7 @@ def search_for_place():
     city_ids = data.get("cities")
     amenity_ids = data.get("amenities")
     places = storage.all(Place)
+    places = [place for place in places.values()]
     if not state_ids and not city_ids and not amenity_ids:
         res = [place.to_dict() for place in places]
         return jsonify(res)
