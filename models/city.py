@@ -16,9 +16,9 @@ class City(BaseModel, Base):
                           ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
         places = relationship("Place", backref="cities")
-        __table_args__ = (
-                {'mysql_default_charset': 'latin1'}
-                )
+        # __table_args__ = (
+        #        {'mysql_default_charset': 'latin1'}
+        #        )
 
     else:
         state_id = ""
