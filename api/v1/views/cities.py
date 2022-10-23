@@ -75,14 +75,14 @@ def update_city_with_id_eq_city_id(city_id):
     city_dict = city.to_dict()
     dont_update = ["id", "created_at", "updated_at"]
     for skip in dont_update:
-        data[skip] = city_dict[skip]
-    city_dict.update(data)
-    city.delete()
-    storage.save()
-    updated_city = City(**city_dict)
-    updated_city.save()
+        if data.get(skip):
+            del data[skip]
+
+    for item in data:
+        setattr(city, item, data[item])
+    city.save()
     return jsonify(
-            updated_city.to_dict()
+            city.to_dict()
             )
 
 
