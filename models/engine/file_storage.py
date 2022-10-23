@@ -45,6 +45,8 @@ class FileStorage:
         json_objects = {}
         for key in self.__objects:
             json_objects[key] = self.__objects[key].to_dict()
+            if key.startswith("User"):
+                json_objects[key]["password"] = self.__objects[key].password
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
