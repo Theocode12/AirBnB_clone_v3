@@ -16,9 +16,9 @@ class Review(BaseModel, Base):
         user_id = Column(String(60),
                          ForeignKey('users.id'), nullable=False)
         text = Column(String(1024), nullable=False)
-        # __table_args__ = (
-        #        {'mysql_default_charset': 'latin1'}
-        #        )
+        __table_args__ = (
+                {'mysql_default_charset': 'latin1'}
+                )
 
     else:
         place_id = ""
