@@ -80,7 +80,9 @@ class Place(BaseModel, Base):
             amenity_list = []
             amenities = models.storage.all(Amenity)
             for amenity_id in self.amenity_ids:
-                amenity_list.append(models.storage.get(Amenity, amenity_id))
+                if models.storage.get(Amenity, amenity_id):
+                    amenity_list.append(models.storage.get(Amenity,
+                                        amenity_id))
             return amenity_list
 
         @amenities.setter
@@ -88,5 +90,4 @@ class Place(BaseModel, Base):
             """ amenity setter method """
             from models.amenity import Amenity
             if type(obj) == Amenity:
-                print(obj.id)
                 self.amenity_ids.append(obj.id)
