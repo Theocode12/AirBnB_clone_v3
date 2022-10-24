@@ -187,7 +187,7 @@ def search_for_place():
                     count += 1
             if count == size and dct not in res:
                 res.append(dct)
-            elif dct in res:
+            elif dct in res and count != size:
                 res.remove(dct)
 
     return jsonify(res)
