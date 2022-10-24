@@ -80,18 +80,15 @@ def update_user_with_id_eq_user_id(user_id):
             "error": "Not a JSON"
             }), 400
 
-    user_dict = user.to_dict()
     dont_update = ["id", "email", "created_at", "updated_at"]
     for skip in dont_update:
-        data[skip] = user_dict[skip]
-    user_dict.update(data)
-    user.delete()
+        del data[skip]
+    for key in data:
+        setattr(user, key, data[key])
+    user.save()
     storage.save()
-    updated_user = User(**user_dict)
-    updated_user.save()
-    return jsonify(
-            updated_user.to_dict()
-            )
+    dct = user.to_dict()
+    return jsonify(dct)
 
 
 @user_views.route('states/<state_id>/users', strict_slashes=False)
@@ -100,9 +97,8 @@ def get_users_of_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    return jsonify(
-                [user.to_dict() for user in state.users]
-            )
+    ls = [user.to_dict() for user in state.users]
+    return jsonify(ls)
 
 
 @user_views.route('states/<state_id>/users', strict_slashes=False,
@@ -129,6 +125,7 @@ def create_linked_to_state_user(state_id):
     user.state_id = state.id
     user.save()
     state.save()
+    dct = user.to_dict()
     return(
-        jsonify(user.to_dict())
+        jsonify(dct)
         ), 201

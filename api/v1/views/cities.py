@@ -40,6 +40,7 @@ def delete_city_with_id_eq_city_id(city_id):
                   methods=["POST"])
 def create_city():
     """ creates a new city """
+    abort(404)
     try:
         data = request.get_json()
     except Exception:
@@ -81,9 +82,8 @@ def update_city_with_id_eq_city_id(city_id):
     for item in data:
         setattr(city, item, data[item])
     city.save()
-    return jsonify(
-            city.to_dict()
-            )
+    dct = city.to_dict()
+    return jsonify(dct)
 
 
 @city_views.route('states/<state_id>/cities', strict_slashes=False)
@@ -92,9 +92,8 @@ def get_cities_of_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    return jsonify(
-                [city.to_dict() for city in state.cities]
-            )
+    ls = [city.to_dict() for city in state.cities]
+    return jsonify(ls)
 
 
 @city_views.route('states/<state_id>/cities', strict_slashes=False,
@@ -121,6 +120,7 @@ def create_linked_to_state_city(state_id):
     city.state_id = state.id
     city.save()
     state.save()
+    dct = city.to_dict()
     return(
-        jsonify(city.to_dict())
+        jsonify(dct)
         ), 201
