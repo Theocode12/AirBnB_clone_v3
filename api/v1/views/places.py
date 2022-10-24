@@ -78,7 +78,10 @@ def update_place_with_id_eq_place_id(place_id):
     place_dict = place.to_dict()
     dont_update = ["id", "created_at", "updated_at", "user_id", "city_id"]
     for skip in dont_update:
-        data[skip] = place_dict[skip]
+        try:
+            data[skip] = place_dict[skip]
+        except Exception:
+            pass
     place_dict.update(data)
     place.delete()
     storage.save()
