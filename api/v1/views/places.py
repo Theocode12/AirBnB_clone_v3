@@ -157,6 +157,7 @@ def search_for_place():
         return jsonify(res)
 
     res = []
+
     if state_ids:
         for id_ in state_ids:
             state = storage.get(State, id_)
@@ -164,7 +165,9 @@ def search_for_place():
                 for city in state.cities:
                     for p in city.places:
                         dct = p.to_dict()
-                        res.append(dct)
+                        if dct not in res:
+                            res.append(dct)
+
     if city_ids:
         for id_ in city_ids:
             city = storage.get(City, id_)
@@ -182,8 +185,9 @@ def search_for_place():
             for amenity in p_amenities:
                 if amenity.id in amenity_ids:
                     count += 1
-            if count == size:
+            if count == size and dct not in res:
                 res.append(dct)
             elif dct in res:
                 res.remove(dct)
+
     return jsonify(res)
