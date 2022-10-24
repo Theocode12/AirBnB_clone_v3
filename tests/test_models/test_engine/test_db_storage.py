@@ -21,6 +21,10 @@ import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
+sub_class_1 = {"Amenity": Amenity, "State": State, "User": User}
+kw = {"name": "placeholdername", "user_id": "user_id",
+      "password": "password", "state_id": "state_id",
+      "city_id": "city_id", "email": "email"}
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -86,3 +90,22 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get(self):
+        """ test get an obj by id """
+        for clas in sub_class_1.values():
+            obj = clas(**kw)
+            obj.save()
+            retrieved = models.storage.get(type(obj), obj.id)
+            self.assertEqual(obj.id, retrieved.id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get_fail(self):
+        """ test get an obj by id """
+        for clas in sub_class_1.values():
+            obj = clas(**kw)
+            obj.save()
+            retrieved = models.storage.get(type(obj), "wrong_passwd")
+            id_ = retrieved.id if retrieved else "wrong_id"
+            self.assertNotEqual(obj.id, id_)
