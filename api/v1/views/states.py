@@ -48,9 +48,10 @@ def create_state():
             }), 400
     name = data.get("name")
     if not name:
-        return jsonify({
-            "error": "Missing name"
-            }), 400
+        return jsonify("Missing name"), 400
+#        return jsonify({
+#            "error": "Missing name"
+#            }), 400
     state = State(name=name)
     state.save()
     return jsonify(
