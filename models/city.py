@@ -24,6 +24,17 @@ class City(BaseModel, Base):
         state_id = ""
         name = ""
 
+        @property
+        def places(self):
+            """ gets places associated with city """
+            from models.place import Place
+            places = models.storage.all(Place)
+            ls = []
+            for obj in places.values():
+                if obj.city_id == self.id:
+                    ls.append(obj)
+            return ls
+
     def __init__(self, *args, **kwargs):
         """initializes city"""
         super().__init__(*args, **kwargs)
