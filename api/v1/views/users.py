@@ -82,7 +82,10 @@ def update_user_with_id_eq_user_id(user_id):
 
     dont_update = ["id", "email", "created_at", "updated_at"]
     for skip in dont_update:
-        del data[skip]
+        try:
+            del data[skip]
+        except Exception:
+            pass
     for key in data:
         setattr(user, key, data[key])
     user.save()
