@@ -109,7 +109,7 @@ class TestUser(unittest.TestCase):
         new_d = u.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
-        for attr in u.__dict__:
+        for attr in u.to_dict():
             if attr is not "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
@@ -128,5 +128,5 @@ class TestUser(unittest.TestCase):
     def test_str(self):
         """test that the str method has the correct output"""
         user = User()
-        string = "[User] ({}) {}".format(user.id, user.__dict__)
+        string = "[User] ({}) {}".format(user.id, user.to_dict())
         self.assertEqual(string, str(user))

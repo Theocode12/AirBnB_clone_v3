@@ -91,7 +91,7 @@ class TestCity(unittest.TestCase):
         new_d = c.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
-        for attr in c.__dict__:
+        for attr in c.to_dict():
             if attr is not "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
@@ -110,5 +110,5 @@ class TestCity(unittest.TestCase):
     def test_str(self):
         """test that the str method has the correct output"""
         city = City()
-        string = "[City] ({}) {}".format(city.id, city.__dict__)
+        string = "[City] ({}) {}".format(city.id, city.to_dict())
         self.assertEqual(string, str(city))

@@ -82,7 +82,7 @@ class TestState(unittest.TestCase):
         new_d = s.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
-        for attr in s.__dict__:
+        for attr in s.to_dict():
             if attr is not "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
@@ -101,5 +101,5 @@ class TestState(unittest.TestCase):
     def test_str(self):
         """test that the str method has the correct output"""
         state = State()
-        string = "[State] ({}) {}".format(state.id, state.__dict__)
+        string = "[State] ({}) {}".format(state.id, state.to_dict())
         self.assertEqual(string, str(state))
