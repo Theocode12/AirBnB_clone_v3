@@ -46,7 +46,9 @@ class FileStorage:
         for key in self.__objects:
             json_objects[key] = self.__objects[key].to_dict()
             if key.startswith("User"):
-                json_objects[key]["password"] = self.__objects[key].password
+                if self.__objects[key].password:
+                    json_objects[key]["password"] = self.__objects[key]\
+                            .password
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -61,7 +63,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """ delete obj from objects private attr if it’s inside """
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
