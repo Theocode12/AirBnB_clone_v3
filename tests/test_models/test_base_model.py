@@ -73,8 +73,8 @@ class TestBaseModel(unittest.TestCase):
         }
         for attr, typ in attrs_types.items():
             with self.subTest(attr=attr, typ=typ):
-                self.assertIn(attr, inst.to_dict())
-                self.assertIs(type(inst.to_dict()[attr]), typ)
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
         self.assertEqual(inst.name, "Holberton")
         self.assertEqual(inst.number, 89)
 
