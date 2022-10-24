@@ -43,16 +43,14 @@ def create_state():
     try:
         data = request.get_json()
     except Exception:
-        return jsonify("Not a JSON"), 403
-#        return jsonify({
-#            "error": "Not a JSON"
-#            }), 400
+        return jsonify({
+            "error": "Not a JSON"
+            }), 400
     name = data.get("name")
     if not name:
-        return jsonify("Missing name"), 403
-#        return jsonify({
-#            "error": "Missing name"
-#            }), 400
+        return jsonify({
+            "error": "Missing name"
+            }), 400
     state = State(name=name)
     state.save()
     dct = state.to_dict()
@@ -71,10 +69,9 @@ def update_state_with_id_eq_state_id(state_id):
     try:
         data = request.get_json()
     except Exception:
-        return jsonify("Not a JSON"), 403
-#        return jsonify({
-#            "error": "Not a JSON"
-#            }), 400
+        return jsonify({
+            "error": "Not a JSON"
+            }), 400
 
     state_dict = state.to_dict()
     dont_update = ["id", "created_at", "updated_at"]
