@@ -36,7 +36,7 @@ names_dict = {
 def status():
     """ return status of api """
     return jsonify({
-            "status": "Ok"
+            "status": "OK"
         })
 
 
