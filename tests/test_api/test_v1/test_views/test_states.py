@@ -25,8 +25,8 @@ class test_states_sroute(TestCase):
         """ tests GET /api/v1/states """
         with app.test_client() as c:
             state1 = class_dict["State"](**kw)
-            state2 = class_dict["State"](**kw)
             state1.save()
+            state2 = class_dict["State"](**kw)
             state2.save()
             state_ids.append(state1.id)
             state_ids.append(state2.id)

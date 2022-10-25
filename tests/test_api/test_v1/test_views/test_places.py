@@ -10,7 +10,8 @@ class_dict = get_classes()
 kw = {
         "name": "test",
         "email": "testmail@ya.com",
-        "password": "test_passwd"
+        "password": "test_passwd",
+        "text": "random text"
         }
 place_ids = []
 city_id_list = []
@@ -24,6 +25,12 @@ class test_places_sroute(TestCase):
 
     def test_01_get_places(self):
         """ tests GET /api/v1/cities/<city_id>/places """
+        user = class_dict["User"](**kw)
+        kw["user_id"] = user.id
+        user.save()
+        state = class_dict["State"](**kw)
+        kw["state_id"] = state.id
+        state.save()
         city = class_dict["City"](**kw)
         city.save()
         city_id = city.id

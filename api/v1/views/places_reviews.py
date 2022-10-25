@@ -77,7 +77,10 @@ def update_review_with_id_eq_review_id(review_id):
     review_dict = review.to_dict()
     dont_update = ["id", "created_at", "updated_at", "user_id", "place_id"]
     for skip in dont_update:
-        data[skip] = review_dict[skip]
+        try:
+            data[skip] = review_dict[skip]
+        except Exception:
+            pass
     review_dict.update(data)
     review.delete()
     storage.save()
