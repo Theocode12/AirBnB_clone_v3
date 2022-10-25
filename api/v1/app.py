@@ -12,7 +12,7 @@ from api.v1.views import amenity_views
 from api.v1.views import user_views
 from api.v1.views import place_views
 from api.v1.views import review_views
-from api.v1.views import places_amenity_views 
+from api.v1.views import places_amenity_views
 
 
 app = Flask(__name__)
