@@ -140,6 +140,7 @@ def create_linked_to_city_place(city_id):
         jsonify(dct)
         ), 201
 
+
 @place_views.route('places_search', strict_slashes=False,
                    methods=["POST"])
 def search_for_place():
