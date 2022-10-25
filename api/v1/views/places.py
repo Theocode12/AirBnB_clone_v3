@@ -44,6 +44,8 @@ def create_place():
     """ creates a new place """
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -70,6 +72,8 @@ def update_place_with_id_eq_place_id(place_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -112,6 +116,8 @@ def create_linked_to_city_place(city_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
                 "error": "Not a JSON"
@@ -147,6 +153,8 @@ def search_for_place():
     """ retrieves all places that match search criteria """
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"

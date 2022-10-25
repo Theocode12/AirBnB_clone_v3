@@ -42,6 +42,8 @@ def create_amenity():
     """ creates a new amenity """
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -67,6 +69,8 @@ def update_amenity_with_id_eq_amenity_id(amenity_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"

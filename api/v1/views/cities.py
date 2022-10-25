@@ -43,6 +43,8 @@ def create_city():
     abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -68,6 +70,8 @@ def update_city_with_id_eq_city_id(city_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -105,6 +109,8 @@ def create_linked_to_state_city(state_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
                 "error": "Not a JSON"

@@ -42,6 +42,8 @@ def create_user():
     """ creates a new user """
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -75,6 +77,8 @@ def update_user_with_id_eq_user_id(user_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -113,6 +117,8 @@ def create_linked_to_state_user(state_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
                 "error": "Not a JSON"

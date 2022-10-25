@@ -44,6 +44,8 @@ def create_review():
     abort(405)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -69,6 +71,8 @@ def update_review_with_id_eq_review_id(review_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
             "error": "Not a JSON"
@@ -111,6 +115,8 @@ def create_linked_to_place_review(place_id):
         abort(404)
     try:
         data = request.get_json()
+        if type(data) is not dict:
+            raise TypeError
     except Exception:
         return jsonify({
                 "error": "Not a JSON"
