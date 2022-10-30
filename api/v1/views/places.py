@@ -197,7 +197,7 @@ def search_for_place():
             for amenity in p_amenities:
                 if amenity.id in amenity_ids:
                     count += 1
-            if count == size and dct not in res:
+            if count == size and dct not in res and res:
                 res.append(dct)
             elif dct in res and count != size:
                 res.remove(dct)
