@@ -169,6 +169,10 @@ def search_for_place():
         return jsonify(res)
 
     res = []
+    is_state_ids_and_city_ids_empty = False
+
+    if not state_ids and not city_ids:
+        is_state_ids_and_city_ids_empty = True
 
     if state_ids:
         for id_ in state_ids:
@@ -194,12 +198,20 @@ def search_for_place():
             dct = p.to_dict()
             count = 0
             p_amenities = p.amenities
-            for amenity in p_amenities:
-                if amenity.id in amenity_ids:
-                    count += 1
-            if count == size and dct not in res:
-                res.append(dct)
-            elif dct in res and count != size:
-                res.remove(dct)
+            if is_state_ids_and_city_ids_empty:
+                for amenity in p_amenities:
+                    if amenity.id in amenity_ids:
+                        count += 1
+                if count == size and dct not in res:
+                    res.append(dct)
+                elif dct in res and count != size:
+                    res.remove(dct)
+            else:
+                if dct in res:
+                    for amenity in p_amenities:
+                        if amenity.id in amenity_ids:
+                            count += 1
+                    if count != size:
+                        res.remove(dct)
 
     return jsonify(res)
